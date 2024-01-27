@@ -18,11 +18,9 @@ void enqueue(int v, Queue *Q)
     if (isEmpty(Q) == 1) {
         Q->head = newNode;
         Q->tail = newNode;
-        //printf("this is the first number %d\n", v);
     } else {
         Q->tail->next = newNode;
         Q->tail = Q->tail->next;
-        //printf("%d\n", v);
     }
 }
 
@@ -45,17 +43,24 @@ int front(Queue *Q)
 
 void dequeue(Queue *Q)
 {
+    Q->head = Q->head->next;
 }
 
 void printQueue(Queue *Q)
 {
     struct Node *ptr = Q->head;
     while (ptr != NULL) {
-        printf("value of element: %d\n", ptr->value);
+        printf("%d\n", ptr->value);
         ptr = ptr->next;
     }
 }
 
 void josephus(int n, int m)
 {
+    struct Queue *Q = newQueue();
+    // create queue
+    for (int i = 0; i < n; i++) {
+	    enqueue(i, Q);
+    }
+    
 }
