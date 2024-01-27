@@ -64,25 +64,17 @@ void josephus(int n, int m)
 	    enqueue(i, Q);
     }
 
-    struct Queue *k = newQueue();
-
-    enqueue(0, Q);
-
     // killing people
-    struct Node *ptr = Q->head;
     int count = 0;
     while (isEmpty(Q) == 0) {
-        if (count == m-1) {
+        count++;
+        if (count == m) {
             count = 0;
-            enqueue(ptr->value, k);
-            printf("%d ", ptr->value);
+            printf("%d ", Q->head->value);
             dequeue(Q);
-            ptr=ptr->next;
         } else {
-            ptr = ptr->next;
-            count++;
-            enqueue(ptr->next->value, Q);
-        }   
+            enqueue(Q->head->value, Q);
+            dequeue(Q);
+        }
     }
-    printQueue(k);
 }
