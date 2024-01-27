@@ -14,6 +14,7 @@ void enqueue(int v, Queue *Q)
 {
     Node* newNode = malloc(sizeof(Node));
     newNode->value = v;
+    newNode->next = NULL;
     if (isEmpty(Q) == 1) {
         Q->head = newNode;
         Q->tail = newNode;
@@ -48,6 +49,11 @@ void dequeue(Queue *Q)
 
 void printQueue(Queue *Q)
 {
+    struct Node *ptr = Q->head;
+    while (ptr != NULL) {
+        printf("value of element: %d\n", ptr->value);
+        ptr = ptr->next;
+    }
 }
 
 void josephus(int n, int m)
