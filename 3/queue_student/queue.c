@@ -7,7 +7,6 @@ Queue* newQueue() {
     Queue* q = malloc(sizeof(Queue));
     q->tail = NULL;
     q->head = NULL;
-    //q->head->next = q->tail;
     return q;
 };
 
@@ -15,12 +14,14 @@ void enqueue(int v, Queue *Q)
 {
     Node* newNode = malloc(sizeof(Node));
     newNode->value = v;
-    if (isEmpty) {
+    if (isEmpty(Q) == 1) {
         Q->head = newNode;
         Q->tail = newNode;
+        //printf("this is the first number %d\n", v);
     } else {
         Q->tail->next = newNode;
-        Q->tail = newNode;
+        Q->tail = Q->tail->next;
+        //printf("%d\n", v);
     }
 }
 
