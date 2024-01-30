@@ -1,7 +1,61 @@
+/**
+ * @file queue.c
+ * @author John Nguyen <jn866@drexel.edu>
+ * @date 2024-01-27
+ * @section DESCRIPTION
+ * 
+ * This file is an implementation of the queue data structure with a function to solve the Josephus problem
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "queue.h"
-#include <stdbool.h>
+
+/**
+ * Create a new empty queue
+ * @return pointer to the queue
+ */
+Queue* newQueue();
+
+/**
+ * Add an element at the end of the queue
+ * @param v value to add
+ * @param Q the queue to add the value to
+ */
+void enqueue(int v, Queue *Q);
+
+/**
+ * Get the value at the front of the queue
+ * @param Q the queue to look at
+ * @return the first value in the queue or -1 if the queue is empty
+ */
+int front(Queue *Q);
+
+/**
+ * Determine if the queue is empty
+ * @param Q the queue to look at
+ * @return 1 for True and 0 for False
+ */
+char isEmpty(Queue *Q);
+
+/**
+ * Remove the first value from the queue
+ * @param Q the queue to remove from
+ */
+void dequeue(Queue *Q);
+
+/**
+ * Print the queue to STD out
+ * @param Q the queue to print
+ */
+void printQueue(Queue *Q);
+
+/**
+ * Solve the Josephus puzzle
+ * @param n number of people
+ * @param m the m-th person to kill
+ */
+void josephus(int n, int m);
 
 Queue* newQueue() {
     Queue* q = malloc(sizeof(Queue));
@@ -24,6 +78,15 @@ void enqueue(int v, Queue *Q)
     }
 }
 
+int front(Queue *Q)
+{
+    if (!isEmpty(Q)){
+        return Q->head->value;
+    } else {
+        return -1;
+    }
+}
+
 char isEmpty(Queue *Q)
 {
     if (Q->head == NULL){
@@ -32,18 +95,13 @@ char isEmpty(Queue *Q)
     return 0;
 }
 
-int front(Queue *Q)
-{
-    if (!isEmpty(Q)){
-        return Q->head->value;
-    } else {
-        return -1;
-    };
-}
-
 void dequeue(Queue *Q)
 {
-    Q->head = Q->head->next;
+    if (!isEmpty(Q)) {
+        Node* temp = Q->head;
+        Q->head = Q->head->next;
+        free(temp);
+    }
 }
 
 void printQueue(Queue *Q)
@@ -64,16 +122,16 @@ void josephus(int n, int m)
 	    enqueue(i, Q);
     }
 
-    // killing people
+    // removing people
     int count = 0;
     while (isEmpty(Q) == 0) {
         count++;
         if (count == m) {
             count = 0;
-            printf("%d ", Q->head->value);
+            printf("%d ", front(Q));
             dequeue(Q);
         } else {
-            enqueue(Q->head->value, Q);
+            enqueue(front(Q), Q);
             dequeue(Q);
         }
     }
