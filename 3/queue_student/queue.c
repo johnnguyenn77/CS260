@@ -135,4 +135,5 @@ void josephus(int n, int m)
             dequeue(Q);
         }
     }
+    printf("\n");
 }
