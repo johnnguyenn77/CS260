@@ -5,7 +5,7 @@
 
 // Define Node struct
 struct Node {
-    char* data; // Change to char pointer to store strings
+    char* data;
     struct Node* next;
 };
 
@@ -30,9 +30,9 @@ OpenHash* newOpenHash(int size);
 int hash(char* word, int n);
 bool member(char* word, OpenHash* table);
 void insert(char* word, OpenHash* table);
-LL* newLinkedList();
 void printHash(OpenHash* h);
 void deleteOpenHash(OpenHash* h);
+LL* newLinkedList();
 void llInsert(LL* l, char* word);
 bool llMember(LL* l, char* word);
 void printLL(LL* l);
@@ -46,12 +46,6 @@ OpenHash* newOpenHash(int size){
         h->data[i] = newLinkedList();
     }
     return h;
-}
-
-LL* newLinkedList(){
-    LL* l = malloc(sizeof(LL));
-    l->first = NULL;
-    return l;
 }
 
 int hash(char* word, int n) {
@@ -95,6 +89,12 @@ void deleteOpenHash(OpenHash* h){
     free(h);
 }
 
+LL* newLinkedList(){
+    LL* l = malloc(sizeof(LL));
+    l->first = NULL;
+    return l;
+}
+
 void llInsert(LL* l, char* word){
     Node* newNode = malloc(sizeof(Node));
     newNode->data = strdup(word);
@@ -135,6 +135,23 @@ void deleteLinkedList(LL* l) {
     free(l);
 }
 
+void basic_read_file() {
+    FILE *fptr;
+
+    fptr = fopen("examples/001.txt", "r");
+
+    char myString[100];
+
+    if(fptr != NULL) {
+        while(fgets(myString, 100, fptr)) {
+            printf("%s", myString);
+        }
+    } else {
+        printf("Not able to open the file.");
+    }
+    fclose(fptr);
+}
+
 int main(void) {
     OpenHash* h = newOpenHash(6);
     insert("ab", h);
@@ -145,5 +162,6 @@ int main(void) {
     insert("bsq", h);
     printHash(h);
     deleteOpenHash(h);
+    basic_read_file();
     return 1;
 }
