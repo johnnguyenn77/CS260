@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 // Define Node struct
 struct Node {
@@ -37,6 +38,7 @@ void llInsert(LL* l, char* word);
 bool llMember(LL* l, char* word);
 void printLL(LL* l);
 void deleteLinkedList(LL* l);
+void normalizeWord(char* word);
 
 OpenHash* newOpenHash(int size){
     OpenHash* h = malloc(sizeof(OpenHash));
@@ -135,33 +137,44 @@ void deleteLinkedList(LL* l) {
     free(l);
 }
 
-void basic_read_file() {
-    FILE *fptr;
-
-    fptr = fopen("examples/001.txt", "r");
-
-    char myString[100];
-
-    if(fptr != NULL) {
-        while(fgets(myString, 100, fptr)) {
-            printf("%s", myString);
+void normalizeWord(char* word) {
+    int i = 0, j = 0;
+    while (word[i]) {
+        if (isalpha(word[i])) { // Check if character is alphabetic
+            word[j++] = tolower(word[i]);
         }
-    } else {
-        printf("Not able to open the file.");
+        i++;
     }
-    fclose(fptr);
+    word[j] = '\0'; // Null-terminate the word
 }
 
-int main(void) {
-    OpenHash* h = newOpenHash(6);
-    insert("ab", h);
-    insert("bv", h);
-    insert("cv", h);
-    insert("qwe", h);
-    insert("sdf", h);
-    insert("bsq", h);
+void read_file_insert_words(char* filename, OpenHash* table) {
+    FILE* file = fopen(filename, "r");
+
+    char word[100];
+
+    while (fscanf(file, "%s", word) != EOF) {
+        normalizeWord(word); 
+        if (!member(word, table)) {
+            insert(word, table);
+        }
+    }
+    fclose(file);
+}
+
+int main() {
+    int size;
+    char filename[100];
+
+    // Get user inputs
+    printf("Enter Size of Hash Table: \n");
+    scanf("%d", &size);
+
+    printf("Enter Name of File: \n");
+    scanf("%s", filename);
+    OpenHash* h = newOpenHash(size);
+    read_file_insert_words(filename, h);
     printHash(h);
     deleteOpenHash(h);
-    basic_read_file();
     return 1;
 }
