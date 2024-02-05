@@ -4,35 +4,33 @@
 #include <string.h>
 #include <ctype.h>
 
-// Define Node struct
 struct Node {
     char* data;
     struct Node* next;
 };
 
-// Define LinkedList struct
 struct LL {
     struct Node* first;
 };
 
-// Define OpenHash struct
 struct OpenHash {
     struct LL** data;
     int size;
+    int totalWords;
+    int uniqueWords;
 };
 
-// Typedef structs for convenience
 typedef struct OpenHash OpenHash;
 typedef struct Node Node;
 typedef struct LL LL;
 
-// Function declarations
 OpenHash* newOpenHash(int size);
 int hash(char* word, int n);
 bool member(char* word, OpenHash* table);
 void insert(char* word, OpenHash* table);
-void printHash(OpenHash* h);
-void deleteOpenHash(OpenHash* h);
+void printHash(OpenHash* table);
+void printHashStats(OpenHash* table);
+void deleteOpenHash(OpenHash* table);
 LL* newLinkedList();
 void llInsert(LL* l, char* word);
 bool llMember(LL* l, char* word);
@@ -41,13 +39,15 @@ void deleteLinkedList(LL* l);
 void normalizeWord(char* word);
 
 OpenHash* newOpenHash(int size){
-    OpenHash* h = malloc(sizeof(OpenHash));
-    h->size = size;
-    h->data = malloc(sizeof(LL*)*size);
+    OpenHash* table = malloc(sizeof(OpenHash));
+    table->size = size;
+    table->data = malloc(sizeof(LL*)*size);
+    table->totalWords = 0;
+    table->uniqueWords = 0;
     for(int i = 0; i < size; i++){
-        h->data[i] = newLinkedList();
+        table->data[i] = newLinkedList();
     }
-    return h;
+    return table;
 }
 
 int hash(char* word, int n) {
@@ -67,28 +67,34 @@ bool member(char* word, OpenHash* table){
 }
 
 void insert(char* word, OpenHash* table){
-    if(member(word, table)){return; }
-    int pos = hash(word, table->size);
-    llInsert(table->data[pos], word);
+    if (strlen(word) == 0) {
+        return; // Skip empty strings
+    }
+    if (!member(word, table)) {
+        int pos = hash(word, table->size);
+        llInsert(table->data[pos], word);
+        table->uniqueWords++;
+    }
+    table->totalWords++;
 }
 
-void printHash(OpenHash* h){
+void printHash(OpenHash* table){
     printf("Start of Hash Table.\n");
-    printf("Size: %d\n",h->size);
-    for(int i=0; i < h->size; i++){
+    printf("Size: %d\n",table->size);
+    for(int i=0; i < table->size; i++){
         printf("h->data[%d]=",i);
-        printLL(h->data[i]);
+        printLL(table->data[i]);
         printf("\n");
     }
     printf("End Of Hash Table.\n");
 }
 
-void deleteOpenHash(OpenHash* h){
-    for(int i=0; i < h->size; i++){
-        deleteLinkedList(h->data[i]);
+void deleteOpenHash(OpenHash* table){
+    for(int i=0; i < table->size; i++){
+        deleteLinkedList(table->data[i]);
     }
-    free(h->data);
-    free(h);
+    free(table->data);
+    free(table);
 }
 
 LL* newLinkedList(){
@@ -140,12 +146,12 @@ void deleteLinkedList(LL* l) {
 void normalizeWord(char* word) {
     int i = 0, j = 0;
     while (word[i]) {
-        if (isalpha(word[i])) { // Check if character is alphabetic
+        if (isalpha(word[i])) {
             word[j++] = tolower(word[i]);
         }
         i++;
     }
-    word[j] = '\0'; // Null-terminate the word
+    word[j] = '\0';
 }
 
 void read_file_insert_words(char* filename, OpenHash* table) {
@@ -154,27 +160,47 @@ void read_file_insert_words(char* filename, OpenHash* table) {
     char word[100];
 
     while (fscanf(file, "%s", word) != EOF) {
-        normalizeWord(word); 
-        if (!member(word, table)) {
-            insert(word, table);
-        }
+        normalizeWord(word);
+        insert(word, table);
     }
     fclose(file);
+}
+
+void printHashStats(OpenHash* table) {
+    printf("Total Words: %d\n", table->totalWords);
+    printf("Unique Words: %d\n", table->uniqueWords);
+    printf("Hash Size: %d\n", table->size);
+
+    int totalBucketValues = 0;
+    for (int i = 0; i < table->size; i++) {
+        int bucketSize = 0;
+        Node* current = table->data[i]->first;
+        while (current != NULL) {
+            bucketSize++;
+            current = current->next;
+        }
+        totalBucketValues += bucketSize;
+        printf("Row %d contains %d values.\n", i, bucketSize);
+    }
+
+    float averageLength = (float)totalBucketValues / table->size;
+    printf("Average Length: %.2f\n", averageLength);
 }
 
 int main() {
     int size;
     char filename[100];
 
-    // Get user inputs
     printf("Enter Size of Hash Table: \n");
     scanf("%d", &size);
 
     printf("Enter Name of File: \n");
     scanf("%s", filename);
+
     OpenHash* h = newOpenHash(size);
     read_file_insert_words(filename, h);
-    printHash(h);
+    //printHash(h);
+    printHashStats(h);
     deleteOpenHash(h);
     return 1;
 }
