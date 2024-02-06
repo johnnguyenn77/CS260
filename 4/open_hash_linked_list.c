@@ -1,3 +1,11 @@
+/**
+ * @file open_hash.c
+ * @author John Nguyen <jn866@drexel.edu>
+ * @brief 
+ * @date 2024-02-06
+ * 
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -24,18 +32,93 @@ typedef struct OpenHash OpenHash;
 typedef struct Node Node;
 typedef struct LL LL;
 
+/**
+ * Create a new Hash table based around an array of size elements
+ * @param size is the size of the array the table is built with
+ * @return OpenHash* a pointer to the struct
+ */
 OpenHash* newOpenHash(int size);
+
+/**
+ * The hash function for strings
+ * @param word is a null terminated character array
+ * @param n is the size of the array
+ * @return int the hashed index for the string
+ */
 int hash(char* word, int n);
+
+/**
+ * Ask if string is in table
+ * @param word is a null terminated character array
+ * @param table is the Hash Table to search
+ * @return true if found
+ * @return false if not
+ */
 bool member(char* word, OpenHash* table);
+
+/**
+ * Insert a string into the table. Ignore duplicates.
+ * @param word is a null terminated character array
+ * @param table is the Hash Table to search
+ */
 void insert(char* word, OpenHash* table);
+
+/**
+ * Print out the values of the Hash Table
+ * @param table is the table to be printed
+ */
 void printHash(OpenHash* table);
+
+/**
+ * Print out the stats for the tests
+ * @param table is the table to be printed
+ */
 void printHashStats(OpenHash* table);
+
+/**
+ * Delete the Hash Table from memory
+ * @param table is the table to be deleted
+ */
 void deleteOpenHash(OpenHash* table);
+
+/**
+ * Create a new linked list
+ * @return LL* is the pointed to the linked list
+ */
 LL* newLinkedList();
+
+/**
+ * Insert a string into the linked list
+ * @param l is the linked list to insert the string into
+ * @param word is the string to be inserted
+ */
 void llInsert(LL* l, char* word);
+
+/**
+ * Check if a string is in the linked list
+ * @param l is the linked list to check
+ * @param word is the string to check
+ * @return true if the word is in the linked list
+ * @return false if not
+ */
 bool llMember(LL* l, char* word);
+
+/**
+ * Print out the linked list 
+ * @param l is the linked list to be printed
+ */
 void printLL(LL* l);
+
+/**
+ * Delete the linked list from memory
+ * @param l is the linked list to be deleted
+ */
 void deleteLinkedList(LL* l);
+
+/**
+ * Normalize a string by removing special characters and change it to lowercase
+ * @param word is the string to normalize
+ */
 void normalizeWord(char* word);
 
 OpenHash* newOpenHash(int size){
@@ -68,7 +151,7 @@ bool member(char* word, OpenHash* table){
 
 void insert(char* word, OpenHash* table){
     if (strlen(word) == 0) {
-        return; // Skip empty strings
+        return;
     }
     if (!member(word, table)) {
         int pos = hash(word, table->size);
