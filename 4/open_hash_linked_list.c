@@ -199,7 +199,6 @@ int main() {
 
     OpenHash* h = newOpenHash(size);
     read_file_insert_words(filename, h);
-    //printHash(h);
     printHashStats(h);
     deleteOpenHash(h);
     return 1;
