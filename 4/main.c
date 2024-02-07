@@ -1,16 +1,24 @@
-/**
- * @file open_hash.c
- * @author John Nguyen <jn866@drexel.edu>
- * @brief 
- * @date 2024-02-06
- * 
- * 
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+
+/**
+ * @mainpage CS 260 - Homeowork 4
+ * @section Description
+ * 
+ * The program will read from a provided file, insert the words into a hash table and provide stats about the file.
+ */
+
+/**
+ * @file main.c
+ * @author John Nguyen <jn866@drexel.edu>
+ * @date 2024-02-06
+ * @section DESCRIPTION
+ * 
+ * The file contains the main function, an implementation of the open hash table data structure, functions to solve problems in Homework 4
+ */
 
 /**
  * A structure to represent a single node
@@ -283,10 +291,10 @@ int main() {
     int size;
     char filename[100];
 
-    printf("Enter Size of Hash Table: \n");
+    printf("Enter Size of Hash Table:\n");
     scanf("%d", &size);
 
-    printf("Enter Name of File: \n");
+    printf("Enter Name of File:\n");
     scanf("%s", filename);
 
     OpenHash* h = newOpenHash(size);
