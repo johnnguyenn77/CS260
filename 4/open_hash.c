@@ -12,15 +12,24 @@
 #include <string.h>
 #include <ctype.h>
 
+/**
+ * A structure to represent a single node
+ */
 struct Node {
     char* data;
     struct Node* next;
 };
 
+/**
+ * A structure to represent the array of a hash table
+ */
 struct LL {
     struct Node* first;
 };
 
+/**
+ * A structure to represent the Hash Table itself
+ */
 struct OpenHash {
     struct LL** data;
     int size;
