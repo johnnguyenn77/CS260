@@ -169,6 +169,55 @@ void insert(BST* T, int target) {
     T->root = insertHelper(T->root, target);
 }
 
+Node* deleteHelper(Node* node, int target) {
+	if (node == NULL) {
+		return;
+	}
+
+	if (node->value > target) {
+		node->left = deleteHelper(node->left, target);
+		return node;
+	} else if (node->value < target) {
+		node->right = deleteHelper(node->right, target);
+		return node;
+	}
+
+	if (node->left == NULL) {
+		Node* temp = node->right;
+		free(node);
+		return temp;
+	} else if (node->right == NULL) {
+		Node* temp = node->left;
+		free(node);
+		return temp;
+	} else {
+		Node* succParent = node;
+		Node* succ = node->right;
+		while (succ->left != NULL) {
+			succParent = succ;
+			succ = succ->left;
+		}
+
+		if (succParent != node) {
+			succParent->left = succ->right;
+		} else {
+			succParent->right = succ->right;
+		}
+
+		node->value = succ->value;
+
+		free(succ);
+		return node;
+	}
+}
+
+void deleteFromTree(BST* T, int target) {
+	if (T->root == NULL) {
+		return;
+	}
+	T->root = deleteHelper(T->root, target);
+}
+
 bool searchHelper(Node* current, int target) {
 	if (current == NULL) {
 		return false;
@@ -218,9 +267,48 @@ void inorder(BST* T) {
 		return;
 	}
 
-	inorderHelper(T->root->left);
+	inorderHelper(T->root);
+	printf("\n");
+}
+
+void preorderHelper(Node* node) {
+	if (node == NULL) {
+		return;
+	}
+
+	printf("%d ", node->value);
+
+	preorderHelper(node->left);
+
+	preorderHelper(node->right);
 }
 
 void preorder(BST* T) {
-	
+	if (T->root == NULL) {
+		return;
+	}
+
+	preorderHelper(T->root);
+	printf("\n");
+}
+
+void postorderHelper(Node* node) {
+	if (node == NULL) {
+		return;
+	}
+
+	postorderHelper(node->left);
+
+	postorderHelper(node->right);
+
+	printf("%d ", node->value);
+}
+
+void postorder(BST* T) {
+	if (T->root == NULL) {
+		return;
+	}
+
+	postorderHelper(T->root);
+	printf("\n");
 }
