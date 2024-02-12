@@ -1,0 +1,177 @@
+Select Option:
+1.) Enter Tree Values and print tree.
+2.) Run Height Experiments.
+Enter Number of Values to Test:
+Enter A[0] value:
+Enter A[1] value:
+Enter A[2] value:
+Enter A[3] value:
+Enter A[4] value:
+Enter A[5] value:
+Enter A[6] value:
+Enter A[7] value:
+Enter A[8] value:
+Enter A[9] value:
+Inserted 10 into tree
+Preorder:
+10 
+Inorder:
+10 
+Postorder:
+10 
+Inserted 9 into tree
+Preorder:
+10 9 
+Inorder:
+9 10 
+Postorder:
+9 10 
+Inserted 8 into tree
+Preorder:
+10 9 8 
+Inorder:
+8 9 10 
+Postorder:
+8 9 10 
+Inserted 7 into tree
+Preorder:
+10 9 8 7 
+Inorder:
+7 8 9 10 
+Postorder:
+7 8 9 10 
+Inserted 6 into tree
+Preorder:
+10 9 8 7 6 
+Inorder:
+6 7 8 9 10 
+Postorder:
+6 7 8 9 10 
+Inserted 5 into tree
+Preorder:
+10 9 8 7 6 5 
+Inorder:
+5 6 7 8 9 10 
+Postorder:
+5 6 7 8 9 10 
+Inserted 4 into tree
+Preorder:
+10 9 8 7 6 5 4 
+Inorder:
+4 5 6 7 8 9 10 
+Postorder:
+4 5 6 7 8 9 10 
+Inserted 3 into tree
+Preorder:
+10 9 8 7 6 5 4 3 
+Inorder:
+3 4 5 6 7 8 9 10 
+Postorder:
+3 4 5 6 7 8 9 10 
+Inserted 2 into tree
+Preorder:
+10 9 8 7 6 5 4 3 2 
+Inorder:
+2 3 4 5 6 7 8 9 10 
+Postorder:
+2 3 4 5 6 7 8 9 10 
+Inserted 1 into tree
+Preorder:
+10 9 8 7 6 5 4 3 2 1 
+Inorder:
+1 2 3 4 5 6 7 8 9 10 
+Postorder:
+1 2 3 4 5 6 7 8 9 10 
+The Tree Height is 9
+Is 0 in the tree?
+Answer: 0
+Is 1 in the tree?
+Answer: 1
+Is 2 in the tree?
+Answer: 1
+Is 3 in the tree?
+Answer: 1
+Is 4 in the tree?
+Answer: 1
+Is 5 in the tree?
+Answer: 1
+Is 6 in the tree?
+Answer: 1
+Is 7 in the tree?
+Answer: 1
+Is 8 in the tree?
+Answer: 1
+Is 9 in the tree?
+Answer: 1
+Is 10 in the tree?
+Answer: 1
+Delete 10 from tree
+Preorder:
+9 8 7 6 5 4 3 2 1 
+Inorder:
+1 2 3 4 5 6 7 8 9 
+Postorder:
+1 2 3 4 5 6 7 8 9 
+Delete 9 from tree
+Preorder:
+8 7 6 5 4 3 2 1 
+Inorder:
+1 2 3 4 5 6 7 8 
+Postorder:
+1 2 3 4 5 6 7 8 
+Delete 8 from tree
+Preorder:
+7 6 5 4 3 2 1 
+Inorder:
+1 2 3 4 5 6 7 
+Postorder:
+1 2 3 4 5 6 7 
+Delete 7 from tree
+Preorder:
+6 5 4 3 2 1 
+Inorder:
+1 2 3 4 5 6 
+Postorder:
+1 2 3 4 5 6 
+Delete 6 from tree
+Preorder:
+5 4 3 2 1 
+Inorder:
+1 2 3 4 5 
+Postorder:
+1 2 3 4 5 
+Delete 5 from tree
+Preorder:
+4 3 2 1 
+Inorder:
+1 2 3 4 
+Postorder:
+1 2 3 4 
+Delete 4 from tree
+Preorder:
+3 2 1 
+Inorder:
+1 2 3 
+Postorder:
+1 2 3 
+Delete 3 from tree
+Preorder:
+2 1 
+Inorder:
+1 2 
+Postorder:
+1 2 
+Delete 2 from tree
+Preorder:
+1 
+Inorder:
+1 
+Postorder:
+1 
+Delete 1 from tree
+Preorder:
+
+Inorder:
+
+Postorder:
+
