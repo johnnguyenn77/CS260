@@ -168,3 +168,59 @@ insertHelper(Node* current, int val) {
 void insert(BST* T, int target) {
     T->root = insertHelper(T->root, target);
 }
+
+bool searchHelper(Node* current, int target) {
+	if (current == NULL) {
+		return false;
+	}
+
+	if (current->value == target) {
+		return true;
+	}
+
+	if (target < current->value) {
+		return searchHelper(current->left, target);
+	} else {
+		return searchHelper(current->right, target);
+	}
+}
+
+bool find(BST* T, int target) {
+	return searchHelper(T->root, target);
+}
+
+int minHelper(Node* node) {
+	if (node->left == NULL) {
+		return node->value;
+	} else {
+		return minHelper(node->left);
+	}
+}
+
+int min (BST* T) {
+	return minHelper(T->root);
+}
+
+void inorderHelper(Node* node) {
+	if (node == NULL) {
+		return;
+	}
+
+	inorderHelper(node->left);
+
+	printf("%d ", node->value);
+
+	inorderHelper(node->right);
+}
+
+void inorder(BST* T) {
+	if (T->root == NULL) {
+		return;
+	}
+
+	inorderHelper(T->root->left);
+}
+
+void preorder(BST* T) {
+	
+}
