@@ -143,42 +143,62 @@ BST* newBST() {
     return tree;
 }
 
-insertHelper(Node* current, int val) {
+Node* deleteNode(Node* node) {
+	if (node == NULL) {
+		return node;
+	}
+
+	node->left = deleteNode(node->left);
+	node->right = deleteNode(node->right);
+
+	free(node);
+	return node;
+}
+
+void deleteBST(BST *T) {
+	if (T->root == NULL) {
+		return;
+	}
+
+	T->root = deleteNode(T->root);
+}
+
+Node* insertValue(int target, Node* current) {
     if (current == NULL) {
         Node* node = malloc(sizeof(Node));
         node->left = NULL;
         node->right = NULL;
-        node->value = val;
+        node->value = target;
         return node;
     }
 
-    if (current->value == val) {
+    if (current->value == target) {
         return current;
     }
 
-    if (val < current->value) {
-        current->left = insertHelper(current->left, val);
+    if (target < current->value) {
+        current->left = insertValue(target, current->left);
         return current;
     } else {
-        current->right = insertHelper(current->right, val);
+        current->right = insertValue(target, current->right);
         return current;
     }
 }
 
 void insert(BST* T, int target) {
-    T->root = insertHelper(T->root, target);
+    T->root = insertValue(target, T->root);
 }
 
-Node* deleteHelper(Node* node, int target) {
+Node* deleteValue(int target, Node* node) {
 	if (node == NULL) {
-		return;
+		return NULL;
 	}
 
 	if (node->value > target) {
-		node->left = deleteHelper(node->left, target);
+		node->left = deleteValue(target, node->left);
 		return node;
 	} else if (node->value < target) {
-		node->right = deleteHelper(node->right, target);
+		node->right = deleteValue(target, node->right);
 		return node;
 	}
 
@@ -215,10 +235,10 @@ void deleteFromTree(BST* T, int target) {
 	if (T->root == NULL) {
 		return;
 	}
-	T->root = deleteHelper(T->root, target);
+	T->root = deleteValue(target, T->root);
 }
 
-bool searchHelper(Node* current, int target) {
+bool findValue(int target, Node* current) {
 	if (current == NULL) {
 		return false;
 	}
@@ -228,38 +248,38 @@ bool searchHelper(Node* current, int target) {
 	}
 
 	if (target < current->value) {
-		return searchHelper(current->left, target);
+		return findValue(target, current->left);
 	} else {
-		return searchHelper(current->right, target);
+		return findValue(target, current->right);
 	}
 }
 
 bool find(BST* T, int target) {
-	return searchHelper(T->root, target);
+	return findValue(target, T->root);
 }
 
-int minHelper(Node* node) {
+int findMin(Node* node) {
 	if (node->left == NULL) {
 		return node->value;
 	} else {
-		return minHelper(node->left);
+		return findMin(node->left);
 	}
 }
 
 int min (BST* T) {
-	return minHelper(T->root);
+	return findMin(T->root);
 }
 
-void inorderHelper(Node* node) {
+void inorderWalker(Node* node) {
 	if (node == NULL) {
 		return;
 	}
 
-	inorderHelper(node->left);
+	inorderWalker(node->left);
 
 	printf("%d ", node->value);
 
-	inorderHelper(node->right);
+	inorderWalker(node->right);
 }
 
 void inorder(BST* T) {
@@ -267,20 +287,20 @@ void inorder(BST* T) {
 		return;
 	}
 
-	inorderHelper(T->root);
+	inorderWalker(T->root);
 	printf("\n");
 }
 
-void preorderHelper(Node* node) {
+void preorderWalker(Node* node) {
 	if (node == NULL) {
 		return;
 	}
 
 	printf("%d ", node->value);
 
-	preorderHelper(node->left);
+	preorderWalker(node->left);
 
-	preorderHelper(node->right);
+	preorderWalker(node->right);
 }
 
 void preorder(BST* T) {
@@ -288,18 +308,18 @@ void preorder(BST* T) {
 		return;
 	}
 
-	preorderHelper(T->root);
+	preorderWalker(T->root);
 	printf("\n");
 }
 
-void postorderHelper(Node* node) {
+void postorderWalker(Node* node) {
 	if (node == NULL) {
 		return;
 	}
 
-	postorderHelper(node->left);
+	postorderWalker(node->left);
 
-	postorderHelper(node->right);
+	postorderWalker(node->right);
 
 	printf("%d ", node->value);
 }
@@ -309,6 +329,29 @@ void postorder(BST* T) {
 		return;
 	}
 
-	postorderHelper(T->root);
+	postorderWalker(T->root);
 	printf("\n");
+}
+
+int nodeHeight(Node* node) {
+	if (node == NULL) {
+		return 0;
+	} else {
+		int leftDepth = nodeHeight(node->left);
+		int rightDepth = nodeHeight(node->right);
+
+		if(leftDepth > rightDepth) {
+			return (leftDepth + 1);
+		} else {
+			return (rightDepth + 1);
+		}
+	}
+}
+
+int height(BST *T) {
+	if (T->root == NULL) {
+		return -1;
+	} else {
+		return (nodeHeight(T->root)-1);
+	}
 }
