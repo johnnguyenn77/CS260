@@ -1,3 +1,12 @@
+/**
+ * @file bst.c
+ * @author John Nguyen (jn866@drexel.edu)
+ * @date 2024-02-14
+ * @section DESCRIPTION
+ * 
+ * This file contains the implementation of a binary search tree
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "bst.h"

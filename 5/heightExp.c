@@ -1,3 +1,12 @@
+/**
+ * @file heightExp.c
+ * @author John Nguyen (jn866@drexel.edu)
+ * @date 2024-02-14
+ * @section DESCRIPTION
+ * 
+ * This file contains the implementation of the heightExperiment function for the height experiments.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "heightExp.h"
