@@ -293,6 +293,7 @@ void inorderWalker(Node* node) {
 
 void inorder(BST* T) {
 	if (T->root == NULL) {
+		printf("\n");
 		return;
 	}
 
@@ -314,6 +315,7 @@ void preorderWalker(Node* node) {
 
 void preorder(BST* T) {
 	if (T->root == NULL) {
+		printf("\n");
 		return;
 	}
 
@@ -335,6 +337,7 @@ void postorderWalker(Node* node) {
 
 void postorder(BST* T) {
 	if (T->root == NULL) {
+		printf("\n");
 		return;
 	}
 
