@@ -136,7 +136,7 @@ int min(Heap* myHeap) {
     if (!empty(myHeap)) {
         return myHeap->data[0];
     }
-    return -1; // or handle error as you see fit
+    return -1;
 }
 
 void swap(Heap* myHeap, int i, int j) {
@@ -183,7 +183,6 @@ void downheap(Heap* myHeap, int i) {
 
 void insert(int x, Heap* myHeap) {
     if (myHeap->currentSize == myHeap->maxSize) {
-        // handle error or resize array
         return;
     }
 
@@ -196,7 +195,6 @@ void insert(int x, Heap* myHeap) {
 
 void deletemin(Heap* myHeap) {
     if (empty(myHeap)) {
-        // handle error
         return;
     }
 
