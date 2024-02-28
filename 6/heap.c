@@ -8,6 +8,9 @@
  */
 
 #include "heap.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 /**
  Implement Heap Sort using the heap data structure.
@@ -16,16 +19,6 @@
  @param size is the number of elements in the array
  */
 void heapSort(int* array, int size);
-
-/**
-	A structure to represent a heap (Priority Queue / Min Heap) Data Structure.
- */
-typedef struct Heap Heap;
-struct Heap{
-	int* data;/**< A pointer to your array of numbers. */
-	int maxSize;/**< The maximum size of the heap before it needs to be resized.*/
-	int currentSize;/**< The current number of items in the array. */
-};
 
 /**
  Create a new empty Heap
@@ -157,7 +150,7 @@ int rightChild(int n) {
     return 2 * n + 2;
 }
 
-void upheap(Heap* myHeap, int i) {
+void upheap(Heap* myHeap,int i) {
     while (i != 0 && myHeap->data[parent(i)] > myHeap->data[i]) {
         swap(myHeap, i, parent(i));
         i = parent(i);
