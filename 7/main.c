@@ -1,3 +1,16 @@
+/**
+* @mainpage CS 260 - Homework 7
+* @section Description
+* Implementation of Huffman encoding algorithm.
+*/
+/**
+ * @file main.c
+ * @author John Nguyen (jn866@drexel.edu)
+ * @date 2024-03-04
+ * @section DESCRIPTION
+ * 
+ * Implementation of Huffman encoding algorithm.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,18 +18,32 @@
 #define MAX_TREE_HT 100
 #define ASCII_SIZE 128
 
+/**
+ * @struct MinHeapNode
+ * @brief Structure representing a node in the MinHeap.
+ */
 struct MinHeapNode {
     unsigned freq;
     unsigned char item;
     struct MinHeapNode *left, *right;
 };
 
+/**
+ * @struct MinHeap
+ * @brief Structure representing the MinHeap.
+ */
 struct MinHeap {
     unsigned size;
     unsigned capacity;
     struct MinHeapNode** array;
 };
 
+/**
+ * @brief Create a new MinHeapNode.
+ * @param item ASCII character
+ * @param freq Frequency of the character
+ * @return Pointer to the newly created MinHeapNode
+ */
 struct MinHeapNode* newNode(unsigned char item, unsigned freq) {
     struct MinHeapNode* temp = (struct MinHeapNode*)malloc(sizeof(struct MinHeapNode));
     temp->left = temp->right = NULL;
@@ -25,6 +52,11 @@ struct MinHeapNode* newNode(unsigned char item, unsigned freq) {
     return temp;
 }
 
+/**
+ * @brief Create and initialize a MinHeap.
+ * @param capacity Capacity of the MinHeap
+ * @return Pointer to the newly created MinHeap
+ */
 struct MinHeap* createMinHeap(unsigned capacity) {
     struct MinHeap* minHeap = (struct MinHeap*)malloc(sizeof(struct MinHeap));
     minHeap->size = 0;
@@ -32,6 +64,105 @@ struct MinHeap* createMinHeap(unsigned capacity) {
     minHeap->array = (struct MinHeapNode**)malloc(minHeap->capacity * sizeof(struct MinHeapNode*));
     return minHeap;
 }
+
+/**
+ * @brief Swap two MinHeapNodes.
+ * @param a Pointer to the first MinHeapNode
+ * @param b Pointer to the second MinHeapNode
+ */
+void swapMinHeapNode(struct MinHeapNode **a, struct MinHeapNode **b);
+
+/**
+ * @brief Heapify the MinHeap.
+ * @param minHeap Pointer to the MinHeap
+ * @param idx Index to heapify from
+ */
+void minHeapify(struct MinHeap *minHeap, int idx);
+
+/**
+ * @brief Check if the size of the MinHeap is one.
+ * @param minHeap Pointer to the MinHeap
+ * @return 1 if the size is one, otherwise 0
+ */
+int checkSizeOne(struct MinHeap *minHeap);
+
+/**
+ * @brief Extract the minimum value node from the MinHeap.
+ * @param minHeap Pointer to the MinHeap
+ * @return Pointer to the extracted MinHeapNode
+ */
+struct MinHeapNode *extractMin(struct MinHeap *minHeap);
+
+/**
+ * @brief Insert a new node into the MinHeap.
+ * @param minHeap Pointer to the MinHeap
+ * @param minHeapNode Pointer to the node to be inserted
+ */
+void insertMinHeap(struct MinHeap *minHeap, struct MinHeapNode *minHeapNode);
+
+/**
+ * @brief Build the MinHeap.
+ * @param minHeap Pointer to the MinHeap
+ */
+void buildMinHeap(struct MinHeap *minHeap);
+
+/**
+ * @brief Print an array.
+ * @param arr Array to be printed
+ * @param n Size of the array
+ */
+void printArray(int arr[], int n);
+
+/**
+ * @brief Check if a node is a leaf node.
+ * @param root Pointer to the node
+ * @return 1 if the node is a leaf, otherwise 0
+ */
+int isLeaf(struct MinHeapNode *root);
+
+/**
+ * @brief Create and build the MinHeap for Huffman encoding.
+ * @param item Array of ASCII characters
+ * @param freq Array of frequencies corresponding to each character
+ * @param size Size of the arrays
+ * @return Pointer to the created MinHeap
+ */
+struct MinHeap *createAndBuildMinHeap(unsigned char item[], unsigned freq[], int size);
+
+/**
+ * @brief Build the Huffman tree.
+ * @param item Array of ASCII characters
+ * @param freq Array of frequencies corresponding to each character
+ * @param size Size of the arrays
+ * @return Pointer to the root of the Huffman tree
+ */
+struct MinHeapNode *buildHuffmanTree(unsigned char item[], unsigned freq[], int size);
+
+/**
+ * @brief Print Huffman codes.
+ * @param root Pointer to the root of the Huffman tree
+ * @param arr Array to store Huffman codes
+ * @param top Top index of the array
+ * @param codes Array to store Huffman codes
+ */
+void printCodes(struct MinHeapNode *root, int arr[], int top, char codes[ASCII_SIZE][MAX_TREE_HT]);
+
+/**
+ * @brief Generate Huffman codes for given characters and frequencies.
+ * @param item Array of ASCII characters
+ * @param freq Array of frequencies corresponding to each character
+ * @param size Size of the arrays
+ * @param codes Array to store Huffman codes
+ */
+void HuffmanCodes(unsigned char item[], unsigned freq[], int size, char codes[ASCII_SIZE][MAX_TREE_HT]);
+
+/**
+ * @brief Count the frequency of characters in a file.
+ * @param filename Name of the file
+ * @param freq Array to store the frequency of characters
+ * @param total Pointer to the total number of characters in the file
+ */
+void countFreq(char *filename, int *freq, float *total);
 
 void swapMinHeapNode(struct MinHeapNode** a, struct MinHeapNode** b) {
     struct MinHeapNode* t = *a;
