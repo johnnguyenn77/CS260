@@ -94,7 +94,11 @@ int main() {
         }
 
         printf("Added %d\n", y);
-        printf("Using Edge (%d, %d) with weight %d\n", x, y, G[x][y]);
+        if (x<y) {
+            printf("Using Edge (%d, %d) with weight %d\n", x, y, G[x][y]);
+        } else {
+            printf("Using Edge (%d, %d) with weight %d\n", y, x, G[x][y]);
+        }
         selected[y] = 1;
         no_edge++;
         totalWeight += G[x][y];
